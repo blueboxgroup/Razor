@@ -10,7 +10,8 @@ describe ProjectRazor::BrokerPlugin::ChefClient do
   end
 
   let(:options) do
-    { :username => 'jdoe', :password => 'oops', :ipaddress => '172.16.0.1' }
+    { :username => 'jdoe', :password => 'oops', :ipaddress => '172.16.0.1',
+      :uuid => 'i-am-a-uuid', :metadata => Hash.new }
   end
 
   before do

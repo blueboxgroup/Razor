@@ -38,6 +38,7 @@ module ProjectRazor
 
       def ssh_exec(command, opts)
         options = { :user_known_hosts_file => '/dev/null' }.merge(opts)
+        [:metadata, :uuid].each { |attr| options.delete(attr) }
         host = options.delete(:ipaddress)
         user = options.delete(:username)
 
