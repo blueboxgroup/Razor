@@ -64,10 +64,23 @@ describe ProjectRazor::BrokerPlugin::ChefClient do
   end
 
   describe "#ssh_exec" do
+    before do
+      ssh_connection.stub(:exec!) { "ssh output" }
+    end
+
     it "passes ssh options to the session" do
       Net::SSH.should_receive(:start).with('172.16.0.1', 'jdoe',
         { :user_known_hosts_file => '/dev/null', :password => 'oops' })
       @plugin.ssh_exec("startitup", options)
+    end
+
+    it "returns the ssh output" do
+      @plugin.ssh_exec("startitup", options).should eq("ssh output")
+    end
+
+    it "returns an empty result on Net::SSH exceptions" do
+      Net::SSH.stub(:start) { raise "uh oh" }
+      @plugin.ssh_exec("startitup", options).should be_empty
     end
   end
 

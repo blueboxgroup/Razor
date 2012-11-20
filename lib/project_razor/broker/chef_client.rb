@@ -43,8 +43,13 @@ module ProjectRazor
         user = options.delete(:username)
 
         result = ""
-        Net::SSH.start(host, user, options) do |ssh|
-          result = ssh.exec!(command)
+        begin
+          Net::SSH.start(host, user, options) do |ssh|
+            result = ssh.exec!(command)
+          end
+        rescue => e
+          logger.error "#{@plugin} error when establishing " +
+            "an SSH connection to #{user}@#{host}: #{e}"
         end
         logger.debug "chef_client bootstrap output:\n---\n#{result}\n---"
         result
