@@ -1,4 +1,5 @@
 require 'erb'
+require 'yaml'
 require 'net/ssh'
 require 'project_razor/broker/chef/context'
 
@@ -60,10 +61,25 @@ module ProjectRazor
       end
 
       def chef_context
-        ProjectRazor::BrokerPlugin::Chef::Context.new({
+        ProjectRazor::BrokerPlugin::Chef::Context.new(yaml_config.merge({
           :chef_server_url  => @servers.first,
           :chef_version     => @broker_version
-        }).get_binding
+        })).get_binding
+      end
+
+      def yaml_config
+        yaml_file = File.join($razor_root, "conf/chef_client_#{@name}.yml")
+
+        if File.exist?(yaml_file)
+          logger.debug "Loading chef_client config from #{yaml_file}"
+          config = YAML.load(IO.read(yaml_file))
+        else
+          logger.warn "chef_client config could not be loaded from #{yaml_file}"
+          config = Hash.new
+        end
+
+        # convert string to keys to symbols
+        Hash[config.map{|(k,v)| [k.to_sym,v]}]
       end
     end
   end
