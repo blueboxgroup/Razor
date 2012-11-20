@@ -1,6 +1,14 @@
 module ProjectRazor
   module BrokerPlugin
-    module Chef
+    class Chef
+      # temporary fix for #get_child_templates which thinks this class is
+      # a plugin
+      attr_writer :is_template
+      attr_reader :hidden
+      def initialize(options)
+        @hidden = true
+      end
+
       class Context
         attr_reader :install_sh_url, :chef_version, :validation_key, :chef_bin
 
