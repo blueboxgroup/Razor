@@ -104,19 +104,18 @@ module ProjectRazor
         plugin = options[:plugin]
         name = options[:name]
         description = options[:description]
-        servers = options[:servers]
-        broker_version = options[:version]
-        # check the values that were passed in
-        servers = servers.flatten if servers.is_a? Array
-        servers = servers.split(",") if servers.is_a? String
-        raise ProjectRazor::Error::Slice::MissingArgument, "Broker Server [server_hostname(,server_hostname)]" unless servers.count > 0
-        raise ProjectRazor::Error::Slice::InvalidPlugin, "Invalid broker plugin [#{plugin}]" unless is_valid_template?(BROKER_PREFIX, plugin)
+        req_metadata_hash = options[:req_metadata_hash] if @web_command
         # use the arguments passed in (above) to create a new broker
-        broker                  = new_object_from_template_name(BROKER_PREFIX, plugin)
+        broker = new_object_from_template_name(BROKER_PREFIX, plugin)
+        if @web_command
+          raise ProjectRazor::Error::Slice::MissingArgument, "Must Provide Required Metadata [req_metadata_hash]" unless
+              req_metadata_hash
+          broker.web_create_metadata(req_metadata_hash)
+        else
+          raise ProjectRazor::Error::Slice::UserCancelled, "User cancelled Broker creation" unless broker.cli_create_metadata
+        end
         broker.name             = name
         broker.user_description = description
-        broker.servers          = servers
-        broker.broker_version   = broker_version
         broker.is_template      = false
         # persist that broker, and print the result (or raise an error if cannot persist it)
         setup_data
