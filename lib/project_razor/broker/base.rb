@@ -95,7 +95,7 @@ module ProjectRazor
 
       def cli_create_metadata
         puts "--- Building Broker (#{plugin}): #{name}\n".yellow
-        get_cli_ordered_keys.each { |key|
+        req_metadata_hash.each_key { |key|
           metadata = map_keys_to_symbols(req_metadata_hash[key])
           key = key.to_sym if !key.is_a?(Symbol)
           flag = false
@@ -128,12 +128,6 @@ module ProjectRazor
           end
         }
         true
-      end
-
-      def get_cli_ordered_keys
-        req_metadata_hash.keys.sort do |x,y|
-          req_metadata_hash[x][:cli_order] <=> req_metadata_hash[y][:cli_order]
-        end
       end
 
       def map_keys_to_symbols(hash)
