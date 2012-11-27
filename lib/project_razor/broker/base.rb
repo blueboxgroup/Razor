@@ -20,10 +20,6 @@ module ProjectRazor
         @description = "Base broker plugin - not used"
         @_namespace = :broker
         from_hash(hash) if hash
-        # backwards compat with old @servers array
-        if !@server && defined?(@servers) && !@servers.empty?
-          @server = @servers.first
-        end
       end
 
       def template

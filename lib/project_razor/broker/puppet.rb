@@ -18,6 +18,10 @@ module ProjectRazor::BrokerPlugin
       @description = "PuppetLabs PuppetMaster"
       @hidden = false
       from_hash(hash) if hash
+      # backwards compat with old @servers array
+      if !@server && defined?(@servers) && !@servers.empty?
+        @server = @servers.first
+      end
       @req_metadata_hash = {
         "@server" => {
           :default      => "",
