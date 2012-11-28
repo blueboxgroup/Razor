@@ -42,7 +42,7 @@ module ProjectRazor::BrokerPlugin
 
     def agent_hand_off(options = {})
       @options = options
-      @options[:server] = @servers.first
+      @options[:server] = @server
       @options[:ca_server] = @options[:server]
       @options[:version] = @broker_version
       @options[:puppetagent_certname] ||= @options[:uuid].base62_decode.to_s(16)
