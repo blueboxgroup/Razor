@@ -46,7 +46,7 @@ module ProjectRazor
         if @is_template
           return "Plugin", "Description"
         else
-          return "Name", "Description", "Plugin", "UUID"
+          return "Name", "Description", "Plugin", "Servers", "UUID", "Version"
         end
       end
 
@@ -54,7 +54,9 @@ module ProjectRazor
         if @is_template
           return @plugin.to_s, @description.to_s
         else
-          return @name, @user_description, @plugin.to_s, @uuid
+          # Default string is printed for the broker if the version is false or nil (supports old brokers)
+          broker_version = (@broker_version.nil? || !@broker_version) ? "Default" : @broker_version
+          return @name, @user_description, @plugin.to_s, "[#{@servers.join(",")}]", @uuid, broker_version
         end
       end
 

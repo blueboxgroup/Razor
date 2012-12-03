@@ -152,10 +152,19 @@ module ProjectRazor::BrokerPlugin
       end
       run_list
     end
+    
+    def razor_detail_data
+      uuid = @options[:uuid]
+      node = get_data.fetch_object_by_uuid(:node, uuid)
+      razor_details = node.attributes_hash
+      logger.debug "-------razor details: #{razor_details}"  
+      razor_details
+    end
 
     def first_boot
       {
         :razor_metadata => @options[:metadata],
+        :razor_details => razor_detail_data,
         :run_list => run_list
       }
     end
