@@ -2,6 +2,18 @@
 
 [![Build Status](https://jenkins.puppetlabs.com/job/razor-acceptance-matrix/badge/icon)
 
+## NOTE
+
+This branch is used as a stable tracking branch of upstream with one or more
+pending feature or bugfix branches applied.
+
+Currently the following branches have been applied:
+
+* https://github.com/fnichol/Razor/tree/feature/master/postgres-plugin-fixes
+  (SHA fnichol@2d1eb055d3c7f8ff561780ce40a1fd224e8475b8)
+* https://github.com/fnichol/Razor/tree/bug/master/add-daemons-and-pg-to-gemfile
+  (SHA fnichol@effa8c3e6ec5f732f634801dd735c5f77001b11d)
+
 ## Introduction
 
 Project Razor is a power control, provisioning, and management application
