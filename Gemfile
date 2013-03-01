@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem 'daemons'
 gem 'uuid'
 gem 'base62'
 gem 'colored'
@@ -9,6 +10,7 @@ gem 'require_all'
 gem 'json',        '>= 1.7.7'
 gem 'net-ssh'
 gem 'mongo'
+gem 'pg'
 
 group :test do
   gem 'rspec',              '>= 2.13.0'
