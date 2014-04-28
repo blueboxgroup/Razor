@@ -9,6 +9,7 @@ d-i mirror/country string manual
 d-i mirror/http/hostname string <%= config.image_svc_host %>:<%= config.image_svc_port %>
 d-i mirror/http/directory string /razor/image/os/<%= @image_uuid %>
 d-i mirror/http/proxy string
+d-i live-installer/net-image string http://<%= config.image_svc_host %>:<%= config.image_svc_port %>/razor/image/os/<%= @image_uuid %>/install/filesystem.squashfs
 d-i clock-setup/utc boolean true
 d-i time/zone string US/Central
 d-i clock-setup/ntp boolean true
